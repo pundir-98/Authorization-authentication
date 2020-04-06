@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-frontend-service
+spec:
+  selector:
+    type: myapp-frontend
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    nodePort: 32000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: myapp-frontend
+  template:
+    metadata:
+      labels:
+        type: myapp-frontend
+    spec:
+      containers:
+      - name: myapp-frontend-container
+        image: 08521/mymongoapp1
+        env:
+          - name: host-0f-mongo1
+            value: "mongo-back-service1"
+        ports:
+        - containerPort: 5000
