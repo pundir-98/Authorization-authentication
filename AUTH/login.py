@@ -1,4 +1,5 @@
 import sys 
+import requests
 from flask import *
 sys.path.append('./')
 from DB_ADMIN import db
@@ -31,23 +32,31 @@ def login():
 
         if(role == "manager"):
             
-            return redirect('http://192.168.99.100:32001/'+operation,code=307)
+            res = requests.post(url='http://employee-management.info/'+operation)
+            return res.json()
+
         elif(role == "hr"):
             if(operation== "create"):
                 data = json.dumps(employee['data'])
-                return redirect('http://192.168.99.100:32001/'+operation+'/'+data,code=307)
+                res = requests.post(url='http://employee-management.info/'+operation+'/'+data)
+                
+                return json.loads(res.text)
+                
             elif(operation == "delete"):
                 primary_key = employee['mail']
-                return redirect('http://192.168.99.100:32001/'+operation+'/'+primary_key,code=307)
+                res = requests.get(url='http://employee-management.info/'+operation+'/'+primary_key)
+                return json.loads(res.text)
 
         elif(role == 'developer'):
             if(operation== "create"):
                 data = json.dumps(employee['data'])
-                return redirect('http://192.168.99.100:32001/'+operation+'/'+data,code=307)
+                res = requests.post(url='http://employee-management.info/'+operation+'/'+data)
+                return json.loads(res.text) 
             elif(operation == "update"):
                 primary_key = employee['mail']
                 data = employee['data']
-                return redirect('http://192.168.99.100:32001/'+operation+'/'+primary_key+'/'+json.dumps(data),code=307)    
+                res = requests.post(url='http://employee-management.info/'+operation+'/'+primary_key+'/'+json.dumps(data))
+                return json.loads(res.text)    
     return jsonify({"message": "unautherized user"})
 
 
