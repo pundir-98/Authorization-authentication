@@ -29,7 +29,11 @@ spec:
     spec:
       containers:
       - name: myapp-frontend-container
-        image: 08521/mymongoapp1
+        image: mymongoapp1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"        
         imagePullPolicy: IfNotPresent
       
         ports:
