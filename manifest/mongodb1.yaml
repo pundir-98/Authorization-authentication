@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mongo-back-service2
+
   labels:
     type: mongo-backend-emp
 spec:
@@ -17,6 +18,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongo-back-deployment-emp
+  
 spec:
   selector:
     matchLabels:

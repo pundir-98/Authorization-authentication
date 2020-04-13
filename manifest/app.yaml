@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: myapp-frontend-service
+  namespace: employee
 spec:
   selector:
     type: myapp-frontend
@@ -15,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp-frontend-deployment
+  namespace: employee
 spec:
   replicas: 1
   selector:
@@ -27,9 +29,8 @@ spec:
     spec:
       containers:
       - name: myapp-frontend-container
-        image: 08521/mymongoapp1
-        env:
-          - name: host-0f-mongo1
-            value: "mongo-back-service1"
+        image: mymongoapp1
+        imagePullPolicy: IfNotPresent
+      
         ports:
         - containerPort: 5000
