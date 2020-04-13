@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: myapp-frontend-container
-        image: mymongoapp1
+        image: 08521/mymongoapp1
         imagePullPolicy: IfNotPresent
       
         ports:
